@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 interface Suggestion {
   name: string;
@@ -75,9 +76,11 @@ const SearchInput: React.FC = () => {
             </li>
           }
           {suggestions.map((suggestion) => (
-            <li key={suggestion.name} className='flex justify-between items-center object-contain hover:bg-gray-200 px-4 py-2 cursor-pointer'>
-              {suggestion.name}
-              <img className='h-4' src={suggestion.flag} alt='country flag' />
+            <li key={suggestion.name} className='object-contain hover:bg-gray-200 cursor-pointer'>
+              <Link className='flex justify-between items-center px-4 py-2' to={`/country/${suggestion.name}`}>
+                {suggestion.name}
+                <img className='h-4' src={suggestion.flag} alt='country flag' />
+              </Link>
             </li>
           ))}
         </ul>
