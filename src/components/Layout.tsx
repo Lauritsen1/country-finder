@@ -7,12 +7,11 @@ interface Props {
 
 const Layout: React.FC<Props> = ({ children }) => {
   return (
-    <div className='bg-slate-900 h-screen px-4'>
-      <div className='max-w-7xl mx-auto'>
+    <div className='bg-slate-900 px-4'>
+      <div className='max-w-7xl mx-auto min-h-screen flex flex-col'>
         <Header />
-        <div className='mt-24'>
-          {children}
-        </div>
+        <h1 className='text-5xl font-extrabold text-white text-center my-12'>COUNTRY FINDER</h1>
+        {children}
       </div>
     </div>
   );
