@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 
 import Loader from '../assets/tail-spin.svg'
 
-interface Country {
+interface CountryType {
   name: string;
 }
 
 const SearchIndex: React.FC = () => {
 
-  const [countries, setCountries] = useState<Country[]>([])
+  const [countries, setCountries] = useState<CountryType[]>([])
   const [alphabet, setAlphabet] = useState<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z'])
 
   const fetchData = async () => {
@@ -21,7 +21,7 @@ const SearchIndex: React.FC = () => {
         throw new Error('No results')
       }
 
-      const data: Country[] = await res.json()
+      const data: CountryType[] = await res.json()
       setCountries(data)
 
     } catch (err: any) {
@@ -37,25 +37,29 @@ const SearchIndex: React.FC = () => {
     <div className='grid grid-cols-1 gap-8 pb-12 grow'>
       {countries.length > 0
         ?
-        alphabet.map((letter, letterIndex) => (
-          <div className='bg-slate-500/10 p-4 rounded-xl max-w-3xl mx-auto w-full' key={letterIndex}>
-            <h1 className='text-4xl mb-4 text-slate-400'>{letter}</h1>
-            <div className='grid md:grid-cols-2'>
-              {countries.map((country, countryIndex) => (
-                <>
-                  {country.name.startsWith(letter) && <Link key={countryIndex} to={`/country/${country.name}`} className='text-white mb-2'>{country.name}</Link>}
-                </>
-              ))
-              }
-            </div>
-          </div>
-        ))
+        alphabet.map(letter => {
+          const filteredCountries = countries.filter(country => country.name.startsWith(letter))
+          if (filteredCountries.length > 0) {
+            return (
+              <div className='bg-slate-500/10 p-4 rounded-xl max-w-3xl mx-auto w-full' key={letter} >
+                <h1 className='text-4xl mb-4 text-slate-400'>{letter}</h1>
+                <div className='grid md:grid-cols-2'>
+                  {filteredCountries.map(country => (
+                    <Link key={country.name} to={`/Country/${country.name}`} className='text-white mb-2'>{country.name}</Link>
+                  ))}
+                </div>
+              </div>
+            )
+          } else {
+            return null
+          }
+        })
         :
         <div className='grid place-items-center'>
           <img className='h-12 w-12' src={Loader} alt='Loading...' />
         </div>
       }
-    </div>
+    </div >
   );
 };
 
