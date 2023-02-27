@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
+import useDebounce from '../hooks/useDebounce'
 
 interface Suggestion {
   name: string;
@@ -11,7 +12,9 @@ const SearchInput: React.FC = () => {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([])
   const [error, setError] = useState<string>('')
 
-  const fetchData = async (searchQuery: string) => {
+  const debouncedValue = useDebounce<string>(searchQuery, 500)
+
+  const fetchData = useCallback(async (searchQuery: string) => {
     try {
       setError('')
 
@@ -24,23 +27,19 @@ const SearchInput: React.FC = () => {
 
       const data: Suggestion[] = await res.json()
       setSuggestions(data)
+      console.log('test');
+
 
     } catch (err: any) {
       setError(err.message)
     }
-  }
+  }, [])
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (searchQuery) {
-        fetchData(searchQuery)
-      }
-    }, 400);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [searchQuery]);
+    if (debouncedValue) {
+      fetchData(debouncedValue)
+    }
+  }, [debouncedValue]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     SetSearchQuery(e.target.value)
