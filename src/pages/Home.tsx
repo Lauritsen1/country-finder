@@ -1,11 +1,11 @@
-import SearchInput from '../components/SearchInput';
+import SearchInput from "../components/SearchInput"
 
 const Home: React.FC = () => {
   return (
-    <div className='flex flex-col items-center'>
+    <div className="flex flex-col items-center">
       <SearchInput />
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

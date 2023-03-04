@@ -1,20 +1,24 @@
-import githubLogo from '../assets/github-icon.svg'
+import githubLogo from "../assets/github-icon.svg"
 
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom"
 
 const Header: React.FC = () => {
   return (
-    <header className='flex justify-between items-center py-4'>
-      <nav className='space-x-5'>
-        <Link className='text-white text-lg font-semibold' to='/'>Home</Link>
-        <Link className='text-white text-lg font-semibold' to='/searchindex'>Index</Link>
+    <header className="flex items-center justify-between py-4">
+      <nav className="space-x-5">
+        <Link className="text-lg font-semibold text-white" to="/">
+          Home
+        </Link>
+        <Link className="text-lg font-semibold text-white" to="/searchindex">
+          Index
+        </Link>
       </nav>
 
-      <div className='rounded-full p-1 bg-white w-max'>
-        <img className='w-6 h-6' src={githubLogo} alt='github logo' />
+      <div className="w-max rounded-full bg-white p-1">
+        <img className="h-6 w-6" src={githubLogo} alt="github logo" />
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

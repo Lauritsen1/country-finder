@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
 
 interface CountryType {
   name: string
@@ -23,16 +23,17 @@ const Country: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch(`https://restcountries.com/v2/name/${id}?fullText=true`)
+      const res = await fetch(
+        `https://restcountries.com/v2/name/${id}?fullText=true`
+      )
 
       if (!res.ok) {
         setCountry(null)
-        throw new Error('No results')
+        throw new Error("No results")
       }
 
       const [data]: CountryType[] = await res.json()
       setCountry(data)
-
     } catch (err: any) {
       console.log(err.message)
     }
@@ -40,20 +41,23 @@ const Country: React.FC = () => {
 
   useEffect(() => {
     fetchData()
-  }, []);
+  }, [])
 
-  const thStyle = 'p-4 text-gray-500 font-semibold border-t'
-  const tdStyle = 'p-4 text-gray-900 border-t'
+  const thStyle = "p-4 text-gray-500 font-semibold border-t"
+  const tdStyle = "p-4 text-gray-900 border-t"
 
   return (
     <div>
-
-      <div className='bg-neutral-100 rounded-lg max-w-2xl mx-auto'>
-        <div className='flex justify-between items-center p-4'>
-          <h1 className='text-3xl font-bold'>{country?.name}</h1>
-          <img className='h-10 shadow-md' src={country?.flag} alt={`flag of ${country?.name}`} />
+      <div className="mx-auto max-w-2xl rounded-lg bg-neutral-100">
+        <div className="flex items-center justify-between p-4">
+          <h1 className="text-3xl font-bold">{country?.name}</h1>
+          <img
+            className="h-10 shadow-md"
+            src={country?.flag}
+            alt={`flag of ${country?.name}`}
+          />
         </div>
-        <table className='w-full text-left'>
+        <table className="w-full text-left">
           <tbody>
             <tr>
               <th className={thStyle}>Capital</th>
@@ -79,16 +83,17 @@ const Country: React.FC = () => {
               <th className={thStyle}>Currencies</th>
               <td className={tdStyle}>
                 {country?.currencies.map((currency, index) => (
-                  <span key={index}>{currency.name} ({currency.code})</span>
+                  <span key={index}>
+                    {currency.name} ({currency.code})
+                  </span>
                 ))}
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-
     </div>
-  );
-};
+  )
+}
 
-export default Country;
+export default Country
